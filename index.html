@@ -151,8 +151,33 @@
         food += fps;
         update();
     }
+    function save(){
+        localStorage["food"] = food;
+        localStorage["fps"] = fps;
+        localStorage["hatchetprice"] = hatchetprice;
+        localStorage["fsprice"] = fsprice;
+        localStorage["shatchetprice"] = shatchetprice;
+        localStorage["saved"] = true;
+    }
+    function load(){
+        food = localStorage["food"];
+        fps = localStorage["fps"];
+        hatchetprice = localStorage["hatchetprice"];
+        fsprice = localStorage["hatchetprice"];
+        shatchetprice = localStorage["shatchetprice"];
+        update();
+    }
+    
+    var saved = localStorage["saved"];
+    
+    for(x=0;x<1;x++){
+            if(saved == true){
+            load();
+        }
+    }
     
     
+    setInterval('save()',2000);
     setInterval('autoclick()',1000);
     update();
     
