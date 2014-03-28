@@ -22,6 +22,28 @@
     
     
 </style>
+    
+<script>
+function setCookie(cname,cvalue)
+{
+var d = new Date();
+d.setTime(d.getTime()+(365*24*60*60*1000));
+var expires = "expires="+d.toGMTString();
+document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+    
+function getCookie(cname)
+{
+var name = cname + "=";
+var ca = document.cookie.split(';');
+for(var i=0; i<ca.length; i++) 
+  {
+  var c = ca[i].trim();
+  if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+  }
+return "";
+}    
+</script>
 </head>
 
 <body>
@@ -148,33 +170,32 @@
         update();
     }
     function autoclick(){
-        food += fps;
+        if(fps > 0){
+            food += fps;
+        }
         update();
     }
     function save(){
-        localStorage.setItem("food",food);
-        localStorage.setItem("fps",fps);
-        localStorage.setItem("hatchetprice",hatchetprice);
-        localStorage.setItem("fsprice",fsprice);
-        localStorage.setItem("shatchetprice",shatchetprice);
-        localStorage.setItem("saved",true);
+        setCookie("food",food);
+        setCookie("fps",fps);
+        setCookie("hatchetprice",hatchetprice);
+        setCookie("fsprice",fsprice);
+        setCookie("shatchetprice",shatchetprice);
     }
     function load(){
-        food = localStorage.getItem("food");
-        fps = localStorage.getItem("fps");
-        hatchetprice = localStorage.getItem("hatchetprice");
-        fsprice = localStorage.getItem("fsprice");
-        shatchetprice = localStorage.getItem("shatchetprice");
-        update();
-    }
-    
-    
-    if(localStorage.getItem("saved") == true){
-        load();
+        if( (food != "") && (food != null) ){
+        food = getCookie("food");
+        fps = getCookie("fps");
+        hatchetprice = getCookie("hatchetprice");
+        fsprice = getCookie("fsprice");
+        shatchetprice = getCookie("shatchetprice");
+        }
+
     }
     
     setInterval('save()',2000);
     setInterval('autoclick()',1000);
+    load();
     update();
     
     
